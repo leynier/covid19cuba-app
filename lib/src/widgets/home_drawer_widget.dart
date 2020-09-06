@@ -8,6 +8,7 @@ import 'package:covid19cuba/src/pages/pages.dart';
 import 'package:covid19cuba/src/pages/protocols_page.dart';
 import 'package:covid19cuba/src/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info/package_info.dart';
 import 'package:preferences/preferences.dart';
@@ -20,6 +21,10 @@ class HomeDrawerWidget extends StatefulWidget {
 }
 
 class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
+  static const platform = const MethodChannel(
+    'io.educup.methodchannelstest/test',
+  );
+
   String appName = '';
   String version = '';
 
@@ -46,6 +51,7 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           children: <Widget>[
             header(),
             separator(),
+            mapDrawerItem(),
             casesTableItem(),
             bulletinsDrawerItem(),
             downloadsDrawerItem(),
@@ -132,6 +138,18 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
       height: 2,
       color: Colors.white,
       margin: EdgeInsets.symmetric(horizontal: 10),
+    );
+  }
+
+  Widget mapDrawerItem() {
+    return createDrawerItem(
+      context,
+      icon: Icons.map,
+      text: 'Zonas de Riesgo',
+      onTap: () {
+        Navigator.of(context).pop();
+        platform.invokeMethod<int>('openMap');
+      },
     );
   }
 
