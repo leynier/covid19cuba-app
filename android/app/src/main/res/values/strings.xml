@@ -3,4 +3,5 @@
     <string name="app_name">Covid19 Cuba Data</string>
     <string name="content_description_logo">Logotipo de Covid19 Cuba Data</string>
     <string name="resume">Resumen</string>
+    <string name="map_title">Zonas de Riesgo</string>
 </resources>

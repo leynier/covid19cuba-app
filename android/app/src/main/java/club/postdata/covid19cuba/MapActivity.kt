@@ -1,7 +1,8 @@
 package club.postdata.covid19cuba
 
-import android.app.Activity
 import android.os.Bundle
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import org.mapsforge.core.graphics.Paint
 import org.mapsforge.core.graphics.Style
 import org.mapsforge.core.model.BoundingBox
@@ -15,15 +16,19 @@ import org.mapsforge.map.reader.MapFile
 import org.mapsforge.map.rendertheme.InternalRenderTheme
 import java.io.File
 
-class MapActivity : Activity() {
+class MapActivity : AppCompatActivity() {
     private var mapName = "cuba.map"
     private var mapView: MapView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidGraphicFactory.createInstance(application)
-        mapView = MapView(this)
-        setContentView(mapView)
+        setContentView(R.layout.activity_map)
+        setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.setTitle(R.string.map_title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        this.mapView = findViewById(R.id.mapView)
         try {
             mapView!!.mapScaleBar.isVisible = true
             mapView!!.setBuiltInZoomControls(false)
@@ -48,7 +53,8 @@ class MapActivity : Activity() {
                     LatLong(23.1150, -82.3666))
             val circles = MultiCircle(latLongList, 100f, paint, null)
             mapView!!.layerManager.layers.add(circles)
-            val bounding: BoundingBox = BoundingBox.fromString("19.25330,-85.10663,23.47253,-73.70831")
+            val boundingBoxString = "19.25330,-85.10663,23.47253,-73.70831"
+            val bounding: BoundingBox = BoundingBox.fromString(boundingBoxString)
             mapView!!.model.mapViewPosition.mapLimit = bounding
             mapView!!.setCenter(LatLong(23.1136, -82.3666))
             mapView!!.setZoomLevel(12.toByte())
@@ -58,10 +64,19 @@ class MapActivity : Activity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                super.onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onDestroy() {
         mapView!!.destroyAll()
         AndroidGraphicFactory.clearResourceMemoryCache()
         super.onDestroy()
     }
-
 }
