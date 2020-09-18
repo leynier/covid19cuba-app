@@ -45,13 +45,11 @@ class MapActivity : AppCompatActivity() {
             paint.color = AndroidGraphicFactory.INSTANCE.createColor(100, 255, 0, 0)
             paint.strokeWidth = 0f
             paint.setStyle(Style.FILL)
-            val latLongList = listOf(LatLong(23.1136, -82.3666),
-                    LatLong(23.1136, -82.3666),
-                    LatLong(23.1130, -82.3660),
-                    LatLong(23.1140, -82.3667),
-                    LatLong(23.1100, -82.3670),
-                    LatLong(23.1150, -82.3666))
-            val circles = MultiCircle(latLongList, 100f, paint, null)
+            val dataModel = DataModel.load(this)
+            for (item in dataModel.getCoordinates()) {
+                println(item)
+            }
+            val circles = MultiCircle(dataModel.getCoordinates(), 100f, paint, null)
             mapView!!.layerManager.layers.add(circles)
             val boundingBoxString = "19.25330,-85.10663,23.47253,-73.70831"
             val bounding: BoundingBox = BoundingBox.fromString(boundingBoxString)

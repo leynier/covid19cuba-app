@@ -89,7 +89,15 @@ National _$NationalFromJson(Map<String, dynamic> json) {
     )
     ..deceasesCommonPreviousDiseases = (json['deceases_common_previous_diseases'] as List)?.map((e) => e == null ? null : ItemCode.fromJson(e as Map<String, dynamic>))?.toList()
     ..deceasesAffectedProvinces = (json['deceases_affected_provinces'] as List)?.map((e) => e == null ? null : ItemProvince.fromJson(e as Map<String, dynamic>))?.toList()
-    ..deceasesAffectedMunicipalities = (json['deceases_affected_municipalities'] as List)?.map((e) => e == null ? null : ItemMunicipality.fromJson(e as Map<String, dynamic>))?.toList();
+    ..deceasesAffectedMunicipalities = (json['deceases_affected_municipalities'] as List)?.map((e) => e == null ? null : ItemMunicipality.fromJson(e as Map<String, dynamic>))?.toList()
+    ..zones = (json['zones'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(
+          k,
+          (e as List)
+              ?.map((e) =>
+                  (e as List)?.map((e) => (e as num)?.toDouble())?.toList())
+              ?.toList()),
+    );
 }
 
 Map<String, dynamic> _$NationalToJson(National instance) => <String, dynamic>{
@@ -155,4 +163,5 @@ Map<String, dynamic> _$NationalToJson(National instance) => <String, dynamic>{
       'deceases_affected_provinces': instance.deceasesAffectedProvinces,
       'deceases_affected_municipalities':
           instance.deceasesAffectedMunicipalities,
+      'zones': instance.zones,
     };

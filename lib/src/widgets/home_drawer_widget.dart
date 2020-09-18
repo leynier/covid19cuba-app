@@ -51,8 +51,8 @@ class HomeDrawerWidgetState extends State<HomeDrawerWidget> {
           children: <Widget>[
             header(),
             separator(),
-            mapDrawerItem(),
             casesTableItem(),
+            mapDrawerItem(),
             bulletinsDrawerItem(),
             downloadsDrawerItem(),
             protocolsDrawerItem(),

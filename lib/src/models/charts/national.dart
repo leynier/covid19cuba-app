@@ -193,6 +193,9 @@ class National {
   @JsonKey(name: 'deceases_affected_municipalities')
   List<ItemMunicipality> deceasesAffectedMunicipalities;
 
+  @JsonKey()
+  Map<String, List<List<double>>> zones;
+
   National();
 
   factory National.fromJson(Map<String, dynamic> json) =>
